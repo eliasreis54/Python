@@ -6,11 +6,12 @@ import random
 
 face_cascade = cv2.CascadeClassifier('./data/xml/haarcascade_frontalface_default.xml')
 mouth_cascade = cv2.CascadeClassifier('./data/xml/haarcascade_mcs_mouth.xml')
+noseCascade = cv2.CascadeClassifier('./data/xml/haarcascade_mcs_mouth.xml')
 
 
 
 # Adjust threshold value in range 80 to 105 based on your light.
-bw_threshold = 100
+bw_threshold = 80
 
 # User message
 font = cv2.FONT_HERSHEY_SIMPLEX
@@ -21,6 +22,7 @@ thickness = 2
 font_scale = 1
 weared_mask = "Obrigado por utilizar mascara"
 not_weared_mask = "Use mascara, risco de CORONA"
+not_weared_nose = "\n Cubra o nariz"
 
 # Read video
 cap = cv2.VideoCapture(0)
@@ -38,7 +40,7 @@ while 1:
 
     # detect face
     faces = face_cascade.detectMultiScale(gray, 1.1, 4)
-
+    
     # Face prediction for black and white
     faces_bw = face_cascade.detectMultiScale(black_and_white, 1.1, 4)
 
@@ -59,9 +61,19 @@ while 1:
             # Detect lips counters
             mouth_rects = mouth_cascade.detectMultiScale(gray, 1.8, 15)
 
+            nose_rects = noseCascade.detectMultiScale(gray, 1.1, 20)
+
         # Face detected but Lips not detected which means person is wearing mask
         if(len(mouth_rects) == 0):
-            cv2.putText(img, weared_mask, org, font, font_scale, weared_mask_font_color, thickness, cv2.LINE_AA)
+            if (len(nose_rects) > 0):
+                text = not_weared_mask + not_weared_nose
+                y0, dy = 30, 30
+                for i, line in enumerate(text.split('\n')):
+                    y = y0 + i*dy
+                    cv2.putText(img, line, (30, y), font, font_scale, not_weared_mask_font_color, thickness, cv2.LINE_AA)
+            else:
+                cv2.putText(img, weared_mask, org, font, font_scale, weared_mask_font_color, thickness, cv2.LINE_AA)
+
         else:
             for (mx, my, mw, mh) in mouth_rects:
 

@@ -22,6 +22,7 @@ thickness = 2
 font_scale = 1
 weared_mask = "Obrigado por utilizar mascara"
 not_weared_mask = "Use mascara, risco de CORONA"
+with_mask_weared_but = "Com mascara mas, "
 not_weared_nose = "\n Cubra o nariz"
 
 # Read video
@@ -66,7 +67,7 @@ while 1:
         # Face detected but Lips not detected which means person is wearing mask
         if(len(mouth_rects) == 0):
             if (len(nose_rects) > 0):
-                text = not_weared_mask + not_weared_nose
+                text = with_mask_weared_but + not_weared_nose
                 y0, dy = 30, 30
                 for i, line in enumerate(text.split('\n')):
                     y = y0 + i*dy

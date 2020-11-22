@@ -4,10 +4,10 @@ import random
 
 # multiple cascades: https://github.com/Itseez/opencv/tree/master/data/haarcascades
 
-face_cascade = cv2.CascadeClassifier('data\\xml\\haarcascade_frontalface_default.xml')
-eye_cascade = cv2.CascadeClassifier('data\\xml\\haarcascade_eye.xml')
-mouth_cascade = cv2.CascadeClassifier('data\\xml\\haarcascade_mcs_mouth.xml')
-upper_body = cv2.CascadeClassifier('data\\xml\\haarcascade_upperbody.xml')
+face_cascade = cv2.CascadeClassifier('./data/xml/haarcascade_frontalface_default.xml')
+eye_cascade = cv2.CascadeClassifier('./data/xml/haarcascade_eye.xml')
+mouth_cascade = cv2.CascadeClassifier('./data/xml/haarcascade_mcs_mouth.xml')
+upper_body = cv2.CascadeClassifier('./data/xml/haarcascade_upperbody.xml')
 
 
 
